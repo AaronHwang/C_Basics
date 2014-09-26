@@ -15,7 +15,7 @@ int main(void)
 
 	for (int i = 0; i < strlen(ch); i++)
 	{	
-		printf("%c   ", ch[i]);//注意是%c
+		printf("%c   ", ch[i]);//注意是%c，不能是%s
 		printf("%s   ", ch + i);//注意是%s，不能是%c
 		printf("%s   \n", s + i);//注意是%s
 	}
