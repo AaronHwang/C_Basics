@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-int sigma();//交换两个数
+int sigma();//求连加和
 
 int main(void)
 {
