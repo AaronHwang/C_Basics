@@ -23,7 +23,7 @@ int main(void)
 	}
 
   	char *s2 = malloc((strlen(s)+1)*sizeof(char));//从堆heap分配内存并返回改内存地址
-  	// char *s2 ;s2 = malloc((strlen(s)+1)*sizeof(char));
+  	// char *s2 ;s2 = malloc((strlen(s)+1)*sizeof(char));//与上一行效果一致
   	//同理，char *s2 = "Aaron";
 
   	s2 = s;//复制s赋值给s2
