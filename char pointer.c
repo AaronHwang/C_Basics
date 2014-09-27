@@ -5,10 +5,10 @@
 int main(void)
 {
 	char *s;
-	s="This is a char pointer.";//字符指针赋值
+	s="Aaron.";//字符指针赋值
 	printf("\n%s\n",s);
 	
-	char ch[]="This is also a char pointer.";//字符数组
+	char ch[]="Also Aaron.";//字符数组
 	printf("\n%s\n", ch);
 	s = ch;//都是地址
 	printf("\n%s\n", s);
@@ -16,7 +16,8 @@ int main(void)
 	for (int i = 0; i < strlen(ch); i++)
 	{	
 		printf("%c   ", ch[i]);//注意是%c，不能是%s
-		printf("%s   ", &ch[i]);//特别注意和上一行和下一行的比较，与下一行效果相同
+		printf("%s   ", &ch[i]);//特别注意和上一行和下一行的比较，与下两行效果相同
+		printf("%s   ", &s[i]);//把指针当做数组使用
 		printf("%s   ", ch + i);//注意是%s，不能是%c
 		printf("%s   \n", s + i);//注意是%s
 	}
@@ -28,7 +29,7 @@ int main(void)
   	s2 = s;//复制s赋值给s2
   	printf("%s\n", s2);
 
-  	s2 = "Aaron";//分配内存后可以赋值
+  	s2 = "Aaron2";//分配内存后可以赋值
   	printf("\n%s\n", s2);
 
 	return 0;
