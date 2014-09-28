@@ -16,6 +16,7 @@ int main(void)
 	for (int i = 0; i < strlen(ch); i++)
 	{	
 		printf("%c   ", ch[i]);//注意是%c，不能是%s
+		printf("%c   ", s[i]);//与上一行效果一致，仔细思考与下面几行的区别
 		printf("%s   ", &ch[i]);//特别注意和上一行和下一行的比较，与下两行效果相同
 		printf("%s   ", &s[i]);//把指针当做数组使用
 		printf("%s   ", ch + i);//注意是%s，不能是%c
@@ -31,6 +32,14 @@ int main(void)
 
   	s2 = "Aaron2";//分配内存后可以赋值
   	printf("\n%s\n", s2);
+
+ // 	printf("请输入要输入的字符串长度\nPlease input the size of the string you want to type:");
+ // 	int size;
+ // 	scanf("%d",&size);
+  
+ // 	s2 = malloc(sizeof(char));//s2 = malloc(size*sizeof(char));为什么会这样
+  	scanf("%s",s2);//从heap分配内存后可以输入字符串
+  	printf("%s\n", s2);
 
 	return 0;
 }
