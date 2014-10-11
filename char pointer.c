@@ -12,6 +12,7 @@ int main(void)
 	printf("\n%s\n", ch);
 	s = ch;//都是地址
 	printf("\n%s\n", s);
+	printf("%c\n", *s);//字符串实际上是一个地址指针
 
 	for (int i = 0; i < strlen(ch); i++)
 	{	
