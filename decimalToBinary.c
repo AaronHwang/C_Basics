@@ -4,13 +4,14 @@
 
 void menu()
 {
-	printf("\n        Choose a bit operation:\n");
-//	printf("-------------------------------------------\n");
-	printf("     =================================\n");
-	printf("             1 . Bit And .\n");
-	printf("             2 . Bit Or .\n");
-	printf("             3 . Quit .\n");
-	printf("     =================================\n");
+	printf("\n          Choose a bit operation:\n");
+	printf("      ===============================\n");
+	printf("             ①   Bitwise And.\n"); 
+	printf("             ②   Bitwise Or .\n");
+	printf("             ③   Bitwise Not.\n");
+	printf("             ④   Bitwise XOR.\n");
+	printf("             ⑤   Quit .\n");
+	printf("      ===============================\n");
 
 
 }
@@ -37,7 +38,7 @@ void deci2bi(int n)//十进制转换为二进制
 void bitand()
 {
 	unsigned int a,b;
-	printf("Please input 2 non-negative decimal digits:");
+	printf("Bitwise And:Please input 2 non-negative decimal digits:");
 	scanf("%d %d",&a, &b);
 	printf("%d & %d = %d\n", a,b,a&b);
 	printf("Because:\n");
@@ -57,7 +58,7 @@ void bitand()
 void bitor()
 {
 	unsigned int a,b;
-	printf("Please input 2 non-negative decimal digits:");
+	printf("Bitwise Or:Please input 2 non-negative decimal digits:");
 	scanf("%d %d",&a, &b);
 	printf("%d & %d = %d\n", a,b,a|b);
 	printf("Because:\n");
@@ -74,6 +75,44 @@ void bitor()
 
 }
 
+void bitnot()
+{
+	unsigned int a;
+	printf("Bitwise Not:Please input a non-negative decimal digit:");
+	scanf("%d",&a);
+	printf("~ %d  = %d\n", a, ~a);
+	printf("Because:\n");
+	printf("  %10d = ", a);
+	deci2bi(a);
+
+	for (int i = sizeof(int)*8+14; i >=0; i--)
+	{
+		printf("-");
+	}
+	printf("\n  %10d = ",~a);
+	deci2bi(~a);
+
+}
+
+void bitxor()
+{
+	unsigned int a,b;
+	printf("Bitwise Exclusive Or(XOR):Please input 2 non-negative decimal digits:");
+	scanf("%d %d",&a, &b);
+	printf("%d ⊕ %d = %d\n", a,b,a^b);
+	printf("Because:\n");
+	printf("  %10d = ", a);
+	deci2bi(a);
+	printf("⊕ %10d = ", b);	
+	deci2bi(b);
+	for (int i = sizeof(int)*8+14; i >=0; i--)
+	{
+		printf("-");
+	}
+	printf("\n  %10d = ",a^b);
+	deci2bi(a^b);
+
+}
 
 int main(void)
 {
@@ -87,11 +126,13 @@ int main(void)
 		{
 			case 1  : bitand(); break;
 			case 2  : bitor(); break;			
-			default : break;
+			case 3  : bitnot(); break;			
+			case 4  : bitxor(); break;			
+			default : printf("Quit.\n");break;
 		}
 
 	}
-	while((choice < 3)&&(choice > 0));
+	while((choice < 5)&&(choice > 0));
 
 	return 0;
 }
