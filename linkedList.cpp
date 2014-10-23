@@ -202,14 +202,109 @@ void print(node *head)
 		printf("Empty List!\n");
 }
 
+node *sortlistselection(node *head)
+{
+	if (NULL != head)
+	{
+		node *p1, *p2;
+		int tmpid;
+		string tmpname;
+		int n = length(head);
+
+
+		if (1 == n)//如果链表只有一个节点
+			printf("Only one node in the list.\n");
+		else
+		{
+			p1 = head;
+			p2 = p1 ->next;
+
+			for (int i = 0; i < n - 1; i ++)//selection sort way
+			{
+				for (int j = i + 1; j < n; j ++)
+				{
+					if (p1 ->id > p2 ->id)
+					{
+						tmpid = p1 ->id;
+						tmpname = p1 ->name;
+						p1 ->id = p2 ->id;
+						p1 ->name = p2 ->name;
+						p2 ->id = tmpid;
+						p2 ->name = tmpname;
+					}
+					p2 = p2 ->next;
+				}
+				p1 = p1 ->next;
+				p2 = p1 ->next;
+			}
+		}
+
+		return head;
+	}
+	else
+	{
+		printf("Empty List!\n");
+		return NULL;
+	}
+		
+}
+
+node *sortlistbubble(node *head)
+{
+	if (NULL != head)
+	{
+		node *p;
+		int tmpid,flag = 1;
+		string tmpname;
+		int n = length(head);
+
+		if (NULL == head ->next)//如果链表只有一个节点
+			printf("Only one node in the list.\n");
+		else
+		{
+			p = head;
+			for (int i = 0; i < n - 1 && flag; i ++)//bubble sort way
+			{
+				p = head;
+				flag = 0;
+
+				for (int j = 0; j < n - i - 1; j ++)
+				{
+					if (p ->id > p ->next->id)
+					{
+						tmpid = p ->id;
+						tmpname = p ->name;
+						p ->id = p ->next ->id;
+						p ->name = p ->next ->name;
+						p ->next ->id = tmpid;
+						p ->next ->name = tmpname;
+						flag = 1;
+					}
+					p = p ->next;
+				}
+				
+			}
+		}
+
+		return head;
+	}
+	else
+	{
+		printf("Empty List!\n");
+		return NULL;
+	}
+		
+}
+
 void menu(void)
 {
 	cout << "==================================="<<endl;
 	cout << "    1. Create a new linked list    "<<endl;
 	cout << "    2. Delete a node from list     "<<endl;
 	cout << "    3. Insert a node into list     "<<endl;
-	cout << "    4.    print present list       "<<endl;
-	cout << "    5.         quit                "<<endl;
+	cout << "    4.    sort  present list       "<<endl;
+	cout << "    5.    print present list       "<<endl;
+	cout << "    6.         quit                "<<endl;
 	cout << "==================================="<<endl; 
 
 }
@@ -227,11 +322,12 @@ int main(void)
 			case 1  :head = creat();print(head);break;
 			case 2  :head = delet(head);print(head);break;
 			case 3  :head = insertnode(head);print(head);break;
-			case 4  :print(head);break;
+			case 4  :head = sortlistbubble(head);print(head);break;
+			case 5  :print(head);break;
 			default :break; 
 		}
 	}
-	while(choice > 0 && choice < 5);
+	while(choice > 0 && choice < 6);
 	
 	
 }
