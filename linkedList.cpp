@@ -296,6 +296,31 @@ node *sortlistbubble(node *head)
 		
 }
 
+node *reverselist(node *head)
+{
+	if (NULL != head || NULL != head ->next)//链表为空或只有一个节点
+	{
+		node *p1, *p2, *p3;
+
+		p1 = head;
+		p2 = p1 ->next;
+
+		while(p2)
+		{
+			p3 = p2 ->next;
+			p2 ->next = p1;
+			p1 = p2;
+			p2 = p3;//最后p3,p2都为NULL
+		}
+
+		head ->next = NULL;
+		head = p1;//最后p3,p2都为NULL
+		return head;
+	}
+	else
+		return head;
+}
+
 void menu(void)
 {
 	cout << "==================================="<<endl;
@@ -303,8 +328,9 @@ void menu(void)
 	cout << "    2. Delete a node from list     "<<endl;
 	cout << "    3. Insert a node into list     "<<endl;
 	cout << "    4.    sort  present list       "<<endl;
-	cout << "    5.    print present list       "<<endl;
-	cout << "    6.         quit                "<<endl;
+	cout << "    5.   reverse present list      "<<endl;
+	cout << "    6.    print present list       "<<endl;
+	cout << "    7.         quit                "<<endl;
 	cout << "==================================="<<endl; 
 
 }
@@ -323,11 +349,12 @@ int main(void)
 			case 2  :head = delet(head);print(head);break;
 			case 3  :head = insertnode(head);print(head);break;
 			case 4  :head = sortlistbubble(head);print(head);break;
-			case 5  :print(head);break;
+			case 5  :head = reverselist(head);print(head);break;
+			case 6  :print(head);break;
 			default :break; 
 		}
 	}
-	while(choice > 0 && choice < 6);
+	while(choice > 0 && choice < 8);
 	
 	
 }
