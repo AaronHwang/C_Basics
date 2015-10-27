@@ -5,20 +5,64 @@
 using namespace std;
 
 #define TreeStackSize 10
+#define TreeQueueSize 50
 
-struct BiTreeNode
+struct BiTreeNode//二叉树的基本节点结构
 {
 	char data;
 	BiTreeNode *Lchild, *Rchild;
 };
 
-class NodeStack//一个用于储存节点地址的栈
+class NodeQueue
+{
+public:
+	NodeQueue()
+	{
+		front = 0;
+		rear = 0;
+	}
+	~NodeQueue(){}
+
+	int front, rear;
+
+	void enQueue(BiTreeNode *root)//从队尾入队
+	{
+		if (TreeQueueSize - 1 == rear)
+		{
+			printf("Queue is Full!\n");
+		}
+		else
+		{
+			p[++rear] = root;
+		}
+	}
+
+	BiTreeNode *deQueue()//从队头出队
+	{
+		if (front == rear)
+		{	
+			printf("Queue is Empty!\n");
+			return NULL;
+		}
+		else
+		{
+			return p[++front];
+		}
+	}
+
+
+private:
+	BiTreeNode *p[TreeQueueSize];
+
+};
+
+class NodeStack//一个用于储存parent和ancestor节点地址的栈
 {
 public:
 	NodeStack() {top = -1;}
 	~NodeStack() {};
 	
-	void push(BiTreeNode *root)
+	void push(BiTreeNode *root)//入栈操作
 	{
 		if (TreeStackSize - 1 == top)
 		{
@@ -30,7 +74,7 @@ public:
 		}
 	}
 
-	BiTreeNode *pop(void)
+	BiTreeNode *pop(void)//出栈操作
 	{
 		if (-1 == top)
 		{
@@ -47,7 +91,7 @@ public:
 
 
 private:
-	BiTreeNode *p[TreeStackSize];
+	BiTreeNode *p[TreeStackSize];//指针数组作为栈的实现结构
 };
 
 class BiTree
@@ -64,15 +108,15 @@ public:
 	{
 		if (NULL != biTreeRoot)
 		{
-			releasesBiTree(biTreeRoot);
+			releaseBiTree(biTreeRoot);
 		}
 	}
 
 	void preOrderRecursion(BiTreeNode *root);
 	
-	void preOrder(BiTreeNode *root)
+	void preOrder()
 	{
-		BiTreeNode *p1 = root;
+		BiTreeNode *p1 = biTreeRoot;
 		rootstack.top = -1;
 		while((NULL != p1) || (rootstack.top != - 1))
 		{
@@ -92,9 +136,9 @@ public:
 		cout << rootstack.top << endl;
 	}
 
-		void inOrder(BiTreeNode *root)
+		void inOrder()
 	{
-		BiTreeNode *p1 = root;
+		BiTreeNode *p1 = biTreeRoot;
 		rootstack.top = -1;
 		while((NULL != p1) || (rootstack.top != - 1))
 		{
@@ -117,22 +161,55 @@ public:
 	void inOrderRecursion(BiTreeNode *root);
 	void postOrderRecursion(BiTreeNode *root);
 	void postOrder();
-	void levelOrder();
-	void print(void);
-	void print1()
+	void levelOrder(BiTreeNode *root)//层序遍历
 	{
-		cout << biTreeRoot->data << ", "<< biTreeRoot << endl;
+		BiTreeNode *tmp = NULL;
+
+		rootqueue.front = 0;
+		rootqueue.rear = 0;
+
+		if (NULL == root)
+		{
+			return;
+		}
+		else
+		{
+			rootqueue.enQueue(root);
+
+			while(rootqueue.front != rootqueue.rear)//当队不为空
+			{
+				tmp = rootqueue.deQueue();
+				cout << tmp ->data << " ";
+				if (NULL != tmp ->Lchild)
+				{
+					rootqueue.enQueue(tmp ->Lchild);
+				}
+				if (NULL != tmp ->Rchild)
+				{
+					rootqueue.enQueue(tmp ->Rchild);
+				}
+			}
+		}
+		printf("\n%d, %d\n", rootqueue.front, rootqueue.rear);
+		rootqueue.front = 0;
+		rootqueue.rear = 0;
+
+	}
+	void print(void);
+	void draw(void)//图形描绘二叉树
+	{
+		
 	}
 
 	BiTreeNode *createBiTree(BiTreeNode *root);
-	void releasesBiTree(BiTreeNode *root)
+	void releaseBiTree(BiTreeNode *root)
 	{
 		if (NULL == root)
 			return;
 		else
 		{
-			releasesBiTree(root -> Lchild);
-			releasesBiTree(root -> Rchild);
+			releaseBiTree(root -> Lchild);
+			releaseBiTree(root -> Rchild);
 			delete root;
 			root = NULL;
 		}
@@ -142,6 +219,7 @@ public:
 private:
 	BiTreeNode *biTreeRoot;
 	NodeStack rootstack;
+	NodeQueue rootqueue;
 };
 
 
@@ -209,7 +287,6 @@ void BiTree::print(void)
 	else
 	{
 		int choice = 0;
-		printf(":1、前序  2、中序  3、后序  4、层序 5、前序(非递归)?\n");
 		printf("-------- 选择遍历二叉树的方式 --------\n");
 		printf("--------      1. 前序       --------\n");
 		printf("--------      2. 中序       --------\n");
@@ -230,9 +307,9 @@ void BiTree::print(void)
 			case 1: preOrderRecursion(biTreeRoot); cout << endl; break;
 			case 2: inOrderRecursion(biTreeRoot); cout << endl; break;
 			case 3: postOrderRecursion(biTreeRoot); cout << endl; break;
-			
-			case 5: preOrder(biTreeRoot); cout << endl; break;
-			case 6: inOrder(biTreeRoot); cout << endl; break;
+			case 4: levelOrder(biTreeRoot); cout << endl; break;
+			case 5: preOrder(); cout << endl; break;
+			case 6: inOrder(); cout << endl; break;
 			// case 7: postOrder(biTreeRoot); cout << endl; break;
 		}
 	}
@@ -240,6 +317,13 @@ void BiTree::print(void)
 
 
 //test:pre-order:ABCDEFGH(ABC#D###EF##GH###),in-order:CDBAFEHG
+// 				A
+// 			   / \
+// 			  B   E
+// 			 /   / \
+// 			C   F   G
+//           \     /
+//            D   H
 int main(void)
 {
 	BiTree bitree;
